@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Hello, Spring Boot!</title>
+</head>
+<body>
+<h1>Hello, Nintendo BBS!</h1>
+
+<form action="#" th:action="@{/bbs}" th:object="${bbsForm}" method="post">
+    <p>Name: <input type="text" th:field="*{name}" />
+       <em th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</em></p>
+    <p>Comment: <textarea cols="40" rows="4" placeholder="Type anything" th:field="*{comment}"></textarea>
+       <em th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Text Error</em></p>
+    <p><input type="submit" value="POST" /></p>
+</form>
+
+<h2>Recent Comment</h2>
+
+<dl>
+    <th:block th:each="comment : ${comments}">
+        <dt>
+            <span class="name" th:text="${comment.name}" th:attr="title=${comment.remoteAddr}">John Doe</span>
+            <small th:text="${#dates.format(comment.createdAt, '(yyyy-MM-dd HH:mm:ss)')}">(1970-01-01 00:00:00)</small>
+        </dt>
+        <dd th:text="${comment.comment}">Lorem ipsum dolor sit amet</dd>
+    </th:block>
+</dl>
+
+</body>
+</html>
