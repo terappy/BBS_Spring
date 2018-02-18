@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -28,6 +29,21 @@ public class Comment {
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Date createdAt;
+	
+	private String remoteAddr;
+	
+	public Comment() {}
+	
+	public Comment(String name, String comment, String remoteAddr) {
+		this.name = name;
+		this.comment = comment;
+		this.remoteAddr = remoteAddr;
+	}
+	
+	@PrePersist
+	public void prePersist() {
+		this.createdAt = new Date();
+	}
 	
 	@Override
 	public String toString() {
@@ -56,6 +72,15 @@ public class Comment {
 	public Date getCreatedAt() {
 		return createdAt;
 	}
+
+	public String getRemoteAddr() {
+		return remoteAddr;
+	}
+
+	public void setRemoteAddr(String remoteAddr) {
+		this.remoteAddr = remoteAddr;
+	}
+	
 	
 	
 	
